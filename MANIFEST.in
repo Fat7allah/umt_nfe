@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include umt_nfe *.css
+recursive-include umt_nfe *.csv
+recursive-include umt_nfe *.html
+recursive-include umt_nfe *.ico
+recursive-include umt_nfe *.js
+recursive-include umt_nfe *.json
+recursive-include umt_nfe *.md
+recursive-include umt_nfe *.png
+recursive-include umt_nfe *.py
+recursive-include umt_nfe *.svg
+recursive-include umt_nfe *.txt
+recursive-exclude umt_nfe *.pyc

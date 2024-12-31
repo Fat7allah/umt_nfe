@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:MUT-{####}",
+ "creation": "2024-12-29 18:06:57.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "member",
+  "structure_type",
+  "position",
+  "position_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Member",
+   "options": "Member",
+   "reqd": 1
+  },
+  {
+   "fieldname": "structure_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Structure Type",
+   "options": "Executive Office\nAdministrative Council\nGeneral Assembly\nControl Committee\nOutgoing Third",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.structure_type=='Executive Office'",
+   "fieldname": "position",
+   "fieldtype": "Select",
+   "label": "Position",
+   "mandatory_depends_on": "eval:doc.structure_type=='Executive Office'",
+   "options": "President\nDeputy\nGeneral Secretary\nTreasurer\nAdvisor"
+  },
+  {
+   "depends_on": "eval:doc.structure_type=='Executive Office' && doc.position",
+   "fieldname": "position_type",
+   "fieldtype": "Select",
+   "label": "Position Type",
+   "mandatory_depends_on": "eval:doc.structure_type=='Executive Office' && doc.position",
+   "options": "Main\nDeputy"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-29 18:06:57.000000",
+ "modified_by": "Administrator",
+ "module": "UMT NFE",
+ "name": "Mutual Structure",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

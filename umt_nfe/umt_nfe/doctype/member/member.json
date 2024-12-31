@@ -1,0 +1,161 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:MEM-{####}",
+ "creation": "2024-12-29 18:06:57.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "full_name",
+  "profession_section",
+  "profession",
+  "subject",
+  "institution_branch",
+  "education_section",
+  "education_level",
+  "personal_info_section",
+  "birth_date",
+  "gender",
+  "role",
+  "role_type",
+  "contact_section",
+  "phone",
+  "email",
+  "region_section",
+  "province"
+ ],
+ "fields": [
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "profession_section",
+   "fieldtype": "Section Break",
+   "label": "Profession Information"
+  },
+  {
+   "fieldname": "profession",
+   "fieldtype": "Select",
+   "label": "Profession",
+   "options": "Primary Teaching\nMiddle School Teaching\nHigh School Teaching\nEducational Administrator\nMinistry Administrator\nJoint Framework Administrator\nAdmin & Economics Specialist\nEducational Specialist\nSocial Specialist\nGuidance Counselor\nPlanning Counselor\nGuidance Inspector\nPlanning Inspector\nSupplier\nEducational Assistant\nTechnician\nPrimary Inspector\nSecondary Inspector\nDoctor\nAggregation\nHigher Education Professor\nEditor\nFinancial Services Inspector",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:['Primary Teaching', 'Middle School Teaching', 'High School Teaching'].includes(doc.profession)",
+   "fieldname": "subject",
+   "fieldtype": "Select",
+   "label": "Subject",
+   "mandatory_depends_on": "eval:['Primary Teaching', 'Middle School Teaching', 'High School Teaching'].includes(doc.profession)"
+  },
+  {
+   "fieldname": "institution_branch",
+   "fieldtype": "Data",
+   "label": "Institution/Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "education_section",
+   "fieldtype": "Section Break",
+   "label": "Education"
+  },
+  {
+   "fieldname": "education_level",
+   "fieldtype": "Select",
+   "label": "Education Level",
+   "options": "Baccalaureate\nBachelor\nMaster\nDoctorate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "personal_info_section",
+   "fieldtype": "Section Break",
+   "label": "Personal Information"
+  },
+  {
+   "fieldname": "birth_date",
+   "fieldtype": "Date",
+   "label": "Birth Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale",
+   "reqd": 1
+  },
+  {
+   "fieldname": "role",
+   "fieldtype": "Select",
+   "label": "Role",
+   "options": "Educational Administration\nTeacher\nInstructor\nFull-time\nAdministrator\nEducational Framework\nSocial Framework\nAdmin & Economics Framework\nEducational Assistant\nEngineer\nInspector\nHigher Education Framework",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.role=='Educational Administration'",
+   "fieldname": "role_type",
+   "fieldtype": "Select",
+   "label": "Role Type",
+   "mandatory_depends_on": "eval:doc.role=='Educational Administration'",
+   "options": "Director\nDean\nGeneral Guardian"
+  },
+  {
+   "fieldname": "contact_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Information"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Phone",
+   "label": "Phone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "region_section",
+   "fieldtype": "Section Break",
+   "label": "Region Information"
+  },
+  {
+   "fieldname": "province",
+   "fieldtype": "Select",
+   "label": "Province",
+   "options": "Tangier Prefecture\nTetouan Prefecture\nFahs-Anjra Province\nLarache Province\nAl Hoceima Province\nTaza Province\nChefchaouen Province\nOujda-Angad Prefecture\nNador Province\nKenitra Province\nTaourirt Province\nGuercif Province\nBerkane Province\nOujda Angad Province\nFez Prefecture\nMeknes Prefecture\nEl Hajeb Province\nIfrane Province\nMoulay Yacoub Province\nSefrou Province\nBoulemane Province\nTaounate Province\nRabat Prefecture\nSale Prefecture\nKenitra Prefecture\nKhemisset Province\nSidi Kacem Province\nSidi Slimane Province\nBeni Mellal Prefecture\nKhenifra Province\nAzilal Province\nFkih Ben Salah Province\nCasablanca Prefecture\nMohammedia Province\nAin Sebaa-Hay Mohammadi Province\nBernoussi Province\nMoulay Rachid Province\nBen M'Sick Province\nAin Chock Province\nFida Province\nAnfa Province\nHay Hassani Province\nNouaceur Province\nMediouna Province\nSettat Province\nEl Jadida Province\nSidi Bennour Province\nBerrechid Province\nBenslimane Province\nMarrakech Prefecture\nSafi Prefecture\nAl Haouz Province\nChichaoua Province\nEssaouira Province\nKelaa des Sraghna Province\nOuarzazate Province\nErrachidia Province\nMidelt Province\nTinghir Province\nAgadir Ida-Outanane Prefecture\nInezgane-Ait Melloul Prefecture\nTaroudant Province\nTiznit Province\nSidi Ifni Province\nGuelmim Province\nAssa-Zag Province\nTata Province\nLaayoune Province\nLaayoune Prefecture\nSakia El Hamra Prefecture\nTarfaya Province\nOued Ed-Dahab Province\nAousserd Province",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-29 18:06:57.000000",
+ "modified_by": "Administrator",
+ "module": "UMT NFE",
+ "name": "Member",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

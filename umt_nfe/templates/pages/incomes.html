@@ -1,0 +1,82 @@
+{% extends "templates/includes/portal_layout.html" %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Incomes</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="form-group mb-0 flex-grow-1 mr-2">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search incomes...">
+                        </div>
+                        {% if frappe.session.user != 'Guest' %}
+                        <button class="btn btn-primary" onclick="window.location.href='/new-income'">
+                            Add New Income
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Income</h5>
+                    <h3 class="mb-0">{{ frappe.utils.fmt_money(total_income) }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="incomesList">
+        {% for income in incomes %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ income.title }}</h5>
+                    <p class="card-text">
+                        <small class="text-muted">Amount: {{ frappe.utils.fmt_money(income.amount) }}</small><br>
+                        <small class="text-muted">Date: {{ income.date }}</small><br>
+                        <small class="text-muted">Category: {{ income.category }}</small>
+                    </p>
+                    <a href="/incomes/{{ income.name }}" class="btn btn-outline-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not incomes %}
+    <div class="text-center py-5">
+        <p class="text-muted">No incomes found</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script>
+frappe.ready(function() {
+    // Search functionality
+    $('#searchInput').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $("#incomesList .card").filter(function() {
+            $(this).closest('.col-md-6').toggle(
+                $(this).text().toLowerCase().indexOf(value) > -1
+            )
+        });
+    });
+});
+</script>
+{% endblock %}

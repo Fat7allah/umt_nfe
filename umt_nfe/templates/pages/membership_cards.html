@@ -1,0 +1,71 @@
+{% extends "templates/includes/portal_layout.html" %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Membership Cards</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="form-group mb-0 flex-grow-1 mr-2">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search membership cards...">
+                        </div>
+                        {% if frappe.session.user != 'Guest' %}
+                        <button class="btn btn-primary" onclick="window.location.href='/new-membership-card'">
+                            Add New Card
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="cardsList">
+        {% for card in membership_cards %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card #{{ card.name }}</h5>
+                    <p class="card-text">
+                        <small class="text-muted">Member: {{ card.member_name }}</small><br>
+                        <small class="text-muted">Issue Date: {{ card.issue_date }}</small><br>
+                        <small class="text-muted">Status: {{ card.status }}</small>
+                    </p>
+                    <a href="/membership-cards/{{ card.name }}" class="btn btn-outline-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not membership_cards %}
+    <div class="text-center py-5">
+        <p class="text-muted">No membership cards found</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script>
+frappe.ready(function() {
+    // Search functionality
+    $('#searchInput').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $("#cardsList .card").filter(function() {
+            $(this).closest('.col-md-6').toggle(
+                $(this).text().toLowerCase().indexOf(value) > -1
+            )
+        });
+    });
+});
+</script>
+{% endblock %}
