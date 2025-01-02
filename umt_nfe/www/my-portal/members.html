@@ -1,11 +1,10 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-2222222
 <div class="portal-wrapper">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>{{ _("Members") }}</h1>
-        <a href="/my-portal/member" class="btn btn-primary">{{ _("New Member") }}</a>
+        <button class="btn btn-primary" onclick="newMember()">{{ _("New Member") }}</button>
     </div>
 
     <div class="table-responsive">
@@ -32,9 +31,9 @@
                     </td>
                     <td>
                         <div class="btn-group">
-                            <a href="/my-portal/member?name={{ member.name }}" class="btn btn-sm btn-info">
+                            <button class="btn btn-sm btn-info" onclick="editMember('{{ member.name }}')">
                                 {{ _("Edit") }}
-                            </a>
+                            </button>
                             <button class="btn btn-sm btn-danger" onclick="deleteMember('{{ member.name }}')">
                                 {{ _("Delete") }}
                             </button>
@@ -50,15 +49,21 @@
 
 {% block script %}
 <script>
+function newMember() {
+    frappe.new_doc('Member', true);
+}
+
+function editMember(name) {
+    frappe.set_route('Form', 'Member', name);
+}
+
 function deleteMember(name) {
     frappe.confirm(
         __('Are you sure you want to delete this member?'),
         function() {
             frappe.call({
-                method: 'umt_nfe.www.my-portal.member.index.delete_member',
-                args: {
-                    member_name: name
-                },
+                method: 'umt_nfe.umt_nfe.doctype.member.member.delete_member',
+                args: { name: name },
                 callback: function(r) {
                     if (!r.exc) {
                         frappe.show_alert({

@@ -121,10 +121,10 @@ scheduler_events = {
 
 # Portal Menu Items
 portal_menu_items = [
-    {"title": "Members", "route": "/members", "reference_doctype": "Member", "role": "System Manager"},
-    {"title": "Federation", "route": "/federation", "reference_doctype": "Federation Structure", "role": "System Manager"},
-    {"title": "Mutual", "route": "/mutual", "reference_doctype": "Mutual Structure", "role": "System Manager"},
-    {"title": "Finance", "route": "/finance", "reference_doctype": ["Income", "Expense"], "role": "System Manager"}
+    {"title": "Members", "route": "/my-portal/members", "reference_doctype": "Member", "role": "System Manager"},
+    {"title": "Federation", "route": "/my-portal/federation", "reference_doctype": "Federation Structure", "role": "System Manager"},
+    {"title": "Mutual", "route": "/my-portal/mutual", "reference_doctype": "Mutual Structure", "role": "System Manager"},
+    {"title": "Finance", "route": "/my-portal/finance", "reference_doctype": ["Income", "Expense"], "role": "System Manager"}
 ]
 
 # Has Role
