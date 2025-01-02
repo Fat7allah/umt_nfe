@@ -7,7 +7,7 @@ def get_context(context):
     if not frappe.session.user or frappe.session.user == 'Guest':
         frappe.local.flags.redirect_location = '/login'
         raise frappe.Redirect
-        
+
     context.no_cache = True
     
     # Get list of members with important fields
@@ -17,8 +17,10 @@ def get_context(context):
         order_by='full_name asc'
     )
     
+    context.total_members = len(context.members)
+    
     # Add page metadata
     context.title = _("Members Directory")
     context.parents = [
-        {"name": _("Home"), "route": "/my-portal"}
+        {"name": _("Portal"), "route": "/portal"}
     ]

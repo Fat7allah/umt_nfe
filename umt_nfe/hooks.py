@@ -121,16 +121,40 @@ scheduler_events = {
 
 # Portal Menu Items
 portal_menu_items = [
-    {"title": "Members", "route": "/my-portal/members", "reference_doctype": "Member", "role": "System Manager"},
-    {"title": "Federation", "route": "/my-portal/federation", "reference_doctype": "Federation Structure", "role": "System Manager"},
-    {"title": "Mutual", "route": "/my-portal/mutual", "reference_doctype": "Mutual Structure", "role": "System Manager"},
-    {"title": "Finance", "route": "/my-portal/finance", "reference_doctype": ["Income", "Expense"], "role": "System Manager"}
+    {"title": "Dashboard", "route": "/portal", "role": "System Manager"},
+    {"title": "Members", "route": "/portal/members", "reference_doctype": "Member", "role": "System Manager"},
+    {"title": "Federation", "route": "/portal/federation", "reference_doctype": "Federation Structure", "role": "System Manager"},
+    {"title": "Mutual", "route": "/portal/mutual", "reference_doctype": "Mutual Structure", "role": "System Manager"},
+    {"title": "Finance", "route": "/portal/finance", "reference_doctype": ["Income", "Expense"], "role": "System Manager"},
+    {"title": "Membership Cards", "route": "/portal/cards", "reference_doctype": "Membership Card", "role": "System Manager"}
 ]
 
-# Has Role
+# Has Website Permission
 has_website_permission = {
-    "Member": "umt_nfe.umt_nfe.doctype.member.member.has_website_permission"
+    "Member": "umt_nfe.umt_nfe.doctype.member.member.has_website_permission",
+    "Federation Structure": "umt_nfe.umt_nfe.doctype.federation_structure.federation_structure.has_website_permission",
+    "Mutual Structure": "umt_nfe.umt_nfe.doctype.mutual_structure.mutual_structure.has_website_permission",
+    "Income": "umt_nfe.umt_nfe.doctype.income.income.has_website_permission",
+    "Expense": "umt_nfe.umt_nfe.doctype.expense.expense.has_website_permission",
+    "Membership Card": "umt_nfe.umt_nfe.doctype.membership_card.membership_card.has_website_permission"
 }
+
+# Portal Settings
+portal_settings = {
+    "default_portal_role": "System Manager",
+    "default_portal_home": "/portal"
+}
+
+# Website Settings
+website_context = {
+    "favicon": "/assets/umt_nfe/images/favicon.ico",
+    "splash_image": "/assets/umt_nfe/images/splash.png"
+}
+
+# CSS Class
+app_include_css = [
+    "/assets/umt_nfe/css/portal.css"
+]
 
 # User Data Protection
 # --------------------

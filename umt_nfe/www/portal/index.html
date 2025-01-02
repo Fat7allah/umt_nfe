@@ -1,0 +1,104 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="container portal-wrapper py-5">
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="h2 mb-4">{{ _("UMT NFE Portal") }}</h1>
+            <p class="lead text-muted">{{ _("Welcome to the National Federation of Education Management System") }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Members Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ _("Members") }}</h5>
+                    <p class="card-text">{{ _("Manage member information and details") }}</p>
+                    <div class="stats mb-3">
+                        <p class="text-muted mb-0">{{ _("Total Members:") }} {{ stats.member_count }}</p>
+                    </div>
+                    <a href="/portal/members" class="btn btn-primary">{{ _("View Members") }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Federation Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ _("Federation") }}</h5>
+                    <p class="card-text">{{ _("Manage federation structures") }}</p>
+                    <div class="stats mb-3">
+                        <p class="text-muted mb-0">{{ _("Total Structures:") }} {{ stats.federation_count }}</p>
+                    </div>
+                    <a href="/portal/federation" class="btn btn-primary">{{ _("View Federation") }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mutual Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ _("Mutual") }}</h5>
+                    <p class="card-text">{{ _("Manage mutual structures") }}</p>
+                    <div class="stats mb-3">
+                        <p class="text-muted mb-0">{{ _("Total Structures:") }} {{ stats.mutual_count }}</p>
+                    </div>
+                    <a href="/portal/mutual" class="btn btn-primary">{{ _("View Mutual") }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finance Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ _("Finance") }}</h5>
+                    <p class="card-text">{{ _("Track income and expenses") }}</p>
+                    <div class="stats mb-3">
+                        <p class="text-muted mb-0">{{ _("Total Income:") }} {{ stats.income_count }}</p>
+                        <p class="text-muted mb-0">{{ _("Total Expenses:") }} {{ stats.expense_count }}</p>
+                    </div>
+                    <a href="/portal/finance" class="btn btn-primary">{{ _("View Finance") }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Membership Cards Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ _("Membership Cards") }}</h5>
+                    <p class="card-text">{{ _("Manage membership cards") }}</p>
+                    <div class="stats mb-3">
+                        <p class="text-muted mb-0">{{ _("Total Cards:") }} {{ stats.card_count }}</p>
+                    </div>
+                    <a href="/portal/cards" class="btn btn-primary">{{ _("View Cards") }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+.portal-wrapper {
+    min-height: calc(100vh - 300px);
+}
+.card {
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.stats {
+    font-size: 0.9rem;
+}
+</style>
+{% endblock %}
