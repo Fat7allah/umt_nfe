@@ -20,5 +20,5 @@ def get_context(context):
     # Add page metadata
     context.title = _("Members Directory")
     context.parents = [
-        {"name": _("Home"), "route": "/"}
+        {"name": _("Home"), "route": "/my-portal"}
     ]

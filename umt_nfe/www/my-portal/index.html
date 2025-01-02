@@ -11,6 +11,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ _("Members") }}</h5>
                     <p class="card-text">{{ _("Manage member information and details") }}</p>
+                    <p class="text-muted mb-3">{{ _("Total Members:") }} {{ member_count }}</p>
                     <a href="/my-portal/members" class="btn btn-primary">{{ _("View Members") }}</a>
                 </div>
             </div>
@@ -22,6 +23,10 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ _("Finance") }}</h5>
                     <p class="card-text">{{ _("Track income and expenses") }}</p>
+                    <div class="text-muted mb-3">
+                        <p class="mb-1">{{ _("Income Records:") }} {{ income_count }}</p>
+                        <p class="mb-1">{{ _("Expense Records:") }} {{ expense_count }}</p>
+                    </div>
                     <a href="/my-portal/finance" class="btn btn-primary">{{ _("View Finance") }}</a>
                 </div>
             </div>
@@ -33,6 +38,10 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ _("Structures") }}</h5>
                     <p class="card-text">{{ _("Manage federation and mutual structures") }}</p>
+                    <div class="text-muted mb-3">
+                        <p class="mb-1">{{ _("Federation Structures:") }} {{ federation_count }}</p>
+                        <p class="mb-1">{{ _("Mutual Structures:") }} {{ mutual_count }}</p>
+                    </div>
                     <a href="/my-portal/structures" class="btn btn-primary">{{ _("View Structures") }}</a>
                 </div>
             </div>
