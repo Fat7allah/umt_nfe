@@ -1,71 +1,182 @@
-{% extends "templates/includes/portal_layout.html" %}
+{% extends "templates/web.html" %}
 
-{% block content %}
-<div class="page-header">
-    <div class="container">
-        <h1>Members 1111111</h1>
-    </div>
-</div>
-
-<div class="container">
+{% block page_content %}
+1111111
+<div class="container member-portal py-5">
     <div class="row mb-4">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="form-group mb-0 flex-grow-1 mr-2">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search members...">
-                        </div>
-                        {% if frappe.session.user != 'Guest' %}
-                        <button class="btn btn-primary" onclick="window.location.href='/new-member'">
-                            Add New Member
-                        </button>
-                        {% endif %}
-                    </div>
-                </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3">{{ _("Members Directory") }}</h1>
+                {% if frappe.session.user != 'Guest' %}
+                <button class="btn btn-primary" onclick="newMember()">
+                    {{ _("New Member") }}
+                </button>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <div class="row" id="membersList">
-        {% for member in members %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{{ member.full_name }}</h5>
-                    <p class="card-text">
-                        <small class="text-muted">Member ID: {{ member.name }}</small><br>
-                        <small class="text-muted">Phone: {{ member.phone }}</small><br>
-                        <small class="text-muted">Email: {{ member.email }}</small>
-                    </p>
-                    <a href="/members/{{ member.name }}" class="btn btn-outline-primary btn-sm">View Details</a>
-                </div>
-            </div>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="searchInput" 
+                   placeholder="{{ _('Search members...') }}" onkeyup="searchMembers()">
         </div>
-        {% endfor %}
+        <div class="col-md-3">
+            <select class="form-select" id="statusFilter" onchange="filterMembers()">
+                <option value="">{{ _("All Status") }}</option>
+                <option value="Active">{{ _("Active") }}</option>
+                <option value="Inactive">{{ _("Inactive") }}</option>
+                <option value="Pending">{{ _("Pending") }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>{{ _("Full Name") }}</th>
+                    <th>{{ _("Email") }}</th>
+                    <th>{{ _("Phone") }}</th>
+                    <th>{{ _("Status") }}</th>
+                    {% if frappe.session.user != 'Guest' %}
+                    <th class="text-end">{{ _("Actions") }}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody id="membersTableBody">
+                {% for member in members %}
+                <tr>
+                    <td>{{ member.full_name }}</td>
+                    <td>{{ member.email or '' }}</td>
+                    <td>{{ member.phone or '' }}</td>
+                    <td>
+                        <span class="badge rounded-pill bg-{{ 'success' if member.status == 'Active' else 'warning' }}">
+                            {{ _(member.status) }}
+                        </span>
+                    </td>
+                    {% if frappe.session.user != 'Guest' %}
+                    <td class="text-end">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-info" 
+                                    onclick="editMember('{{ member.name }}')">
+                                {{ _("Edit") }}
+                            </button>
+                            <button class="btn btn-sm btn-danger" 
+                                    onclick="deleteMember('{{ member.name }}')">
+                                {{ _("Delete") }}
+                            </button>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     {% if not members %}
-    <div class="text-center py-5">
-        <p class="text-muted">No members found</p>
+    <div class="text-center text-muted mt-4">
+        <p>{{ _("No members found") }}</p>
     </div>
     {% endif %}
 </div>
 {% endblock %}
 
-{% block footer %}
-{{ super() }}
+{% block style %}
+<style>
+.member-portal .badge {
+    font-size: 0.8em;
+    padding: 0.5em 1em;
+}
+.member-portal .btn-group {
+    gap: 0.5rem;
+}
+.member-portal .table td {
+    vertical-align: middle;
+}
+</style>
+{% endblock %}
+
+{% block script %}
 <script>
 frappe.ready(function() {
-    // Search functionality
-    $('#searchInput').on('keyup', function() {
-        var value = $(this).val().toLowerCase();
-        $("#membersList .card").filter(function() {
-            $(this).closest('.col-md-6').toggle(
-                $(this).text().toLowerCase().indexOf(value) > -1
-            )
-        });
-    });
+    // Initialize any necessary components
 });
+
+function newMember() {
+    frappe.new_doc('Member');
+}
+
+function editMember(name) {
+    frappe.set_route('Form', 'Member', name);
+}
+
+function deleteMember(name) {
+    frappe.confirm(
+        __('Are you sure you want to delete this member?'),
+        function() {
+            frappe.call({
+                method: 'umt_nfe.umt_nfe.doctype.member.member.delete_member',
+                args: { name: name },
+                callback: function(r) {
+                    if (!r.exc) {
+                        frappe.show_alert({
+                            message: __('Member deleted successfully'),
+                            indicator: 'green'
+                        });
+                        location.reload();
+                    }
+                }
+            });
+        }
+    );
+}
+
+function searchMembers() {
+    var input = document.getElementById('searchInput');
+    var filter = input.value.toLowerCase();
+    var tbody = document.getElementById('membersTableBody');
+    var rows = tbody.getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var nameCell = rows[i].getElementsByTagName('td')[0];
+        var emailCell = rows[i].getElementsByTagName('td')[1];
+        var phoneCell = rows[i].getElementsByTagName('td')[2];
+        
+        if (nameCell && emailCell && phoneCell) {
+            var name = nameCell.textContent || nameCell.innerText;
+            var email = emailCell.textContent || emailCell.innerText;
+            var phone = phoneCell.textContent || phoneCell.innerText;
+            
+            if (name.toLowerCase().indexOf(filter) > -1 || 
+                email.toLowerCase().indexOf(filter) > -1 ||
+                phone.toLowerCase().indexOf(filter) > -1) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+}
+
+function filterMembers() {
+    var select = document.getElementById('statusFilter');
+    var filter = select.value.toLowerCase();
+    var tbody = document.getElementById('membersTableBody');
+    var rows = tbody.getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var statusCell = rows[i].getElementsByTagName('td')[3];
+        if (statusCell) {
+            var status = statusCell.textContent || statusCell.innerText;
+            if (filter === '' || status.toLowerCase().indexOf(filter) > -1) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+}
 </script>
 {% endblock %}

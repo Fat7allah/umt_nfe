@@ -119,6 +119,19 @@ scheduler_events = {
 # before_job = ["umt_nfe.utils.before_job"]
 # after_job = ["umt_nfe.utils.after_job"]
 
+# Portal Menu Items
+portal_menu_items = [
+    {"title": "Members", "route": "/members", "reference_doctype": "Member", "role": "System Manager"},
+    {"title": "Federation", "route": "/federation", "reference_doctype": "Federation Structure", "role": "System Manager"},
+    {"title": "Mutual", "route": "/mutual", "reference_doctype": "Mutual Structure", "role": "System Manager"},
+    {"title": "Finance", "route": "/finance", "reference_doctype": ["Income", "Expense"], "role": "System Manager"}
+]
+
+# Has Role
+has_website_permission = {
+    "Member": "umt_nfe.umt_nfe.doctype.member.member.has_website_permission"
+}
+
 # User Data Protection
 # --------------------
 

@@ -39,10 +39,23 @@ class Member(Document):
         self.title = " - ".join(title_parts)
 
     def has_website_permission(doc, ptype, user, verbose=False):
+        """Check if user has permission to access member in portal"""
         if not user:
             return False
-        
-        if "System Manager" in frappe.get_roles(user):
+            
+        if user == 'Guest':
+            return False
+            
+        if user == 'Administrator' or frappe.has_permission('Member', ptype, user=user):
             return True
             
-        return frappe.has_permission("Member", ptype, user=user)
+        return False
+
+    @frappe.whitelist()
+    def delete_member(name):
+        """Delete member if user has permission"""
+        if not frappe.has_permission('Member', 'delete'):
+            frappe.throw(_("You don't have permission to delete members"))
+            
+        frappe.delete_doc('Member', name)
+        return {'message': _('Member deleted successfully')}
